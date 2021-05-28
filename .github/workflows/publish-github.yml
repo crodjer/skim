@@ -4,6 +4,7 @@ on:
   push:
     tags:
     - 'v[0-9]+.[0-9]+.[0-9]+'
+    - 'v[0-9]+.[0-9]+.[0-9]+-test'
 
 jobs:
   create-release:
@@ -45,7 +46,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        build: [linux, arm, arm-v7, macos]
+        build: [linux, arm, arm-v7, aarch64, macos]
         include:
         - build: linux
           os: ubuntu-latest
@@ -61,6 +62,11 @@ jobs:
           os: ubuntu-latest
           rust: stable
           target: armv7-unknown-linux-gnueabihf
+          cross: true
+        - build: aarch64
+          os: ubuntu-latest
+          rust: stable
+          target: aarch64-unknown-linux-gnu
           cross: true
         - build: macos
           os: macos-latest
